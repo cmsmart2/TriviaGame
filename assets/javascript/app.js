@@ -55,7 +55,7 @@ $("#begin").on ('click', function(){
 // timer
 function startTimer  (){
     timer --;
-    $('#timer-here').html("Time Left:" + timer);
+    $('#timer-here').html('<h3>Time Left: ' + timer+ '</h3>');
     if(timer<=0){
         // alert("Sorry, you ran out of time");
         outOfTime();
@@ -76,7 +76,7 @@ function currentQuestion (){
 //next question
 function nextQuestion (){
     timer =30;
-    $('#timer-here').html(timer);
+    $('#timer-here').html('<h3>"Time Left: "' + timer+ '</h3>');
     currentlyOnQuestion ++;
     currentQuestion();
 
@@ -88,6 +88,7 @@ function outOfTime (){
     unanswered++;
     $('.mainContainer').html('<h2> You ran out of Time!</h2>');
     $('.mainContainer').append('<h3> The Correct Answer is: '+questions[currentlyOnQuestion].correctAnswer+'</h3>')
+    showImage();
     if(currentlyOnQuestion ===questions.length-1){
         setTimeout(showResults, 5*1000);
     }else{
@@ -111,7 +112,7 @@ function clickedAnswer (e){
 //display images when question is answered
 function showImage (){
     var imgPath = questions[currentlyOnQuestion].Image;
-    var image = $("<img>").attr("src", imgPath);
+    var image = $("<img>").attr("src", imgPath).height(350).width(300);
     $(".mainContainer").append(image);
 }
 
@@ -151,7 +152,7 @@ function showResults (){
     $('.mainContainer').append('<h3> Correct: ' + correct +'</h3>');
     $('.mainContainer').append('<h3> Incorrect:'+ incorrect +'</h3>');
     $('.mainContainer').append('<h3> Unanswered:'+ unanswered +'</h3>');
-    $('.mainContainer').append("<button id='reset'> RESET </button>");
+    $('.mainContainer').append("<button class='btn btn-success' id='reset'> RESET </button>");
    }
 $(document).on('click', '#reset', function(){
     restart();

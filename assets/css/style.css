@@ -1,0 +1,10 @@
+body, .card {
+    background: url(../images/trees.png);
+}
+.card-body {
+    background: url(../images/tree_bark.png);
+    height: 450px;
+}
+h1, h2, h3 {
+    font-family: 'Mansalva', cursive;
+}
