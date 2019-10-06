@@ -108,6 +108,12 @@ function clickedAnswer (e){
         incorrectlyAnswered();
     }
 }
+//display images when question is answered
+function showImage (){
+    var imgPath = questions[currentlyOnQuestion].Image;
+    var image = $("<img>").attr("src", imgPath);
+    $(".mainContainer").append(image);
+}
 
 //if question is answered correctly
 function correctlyAnswered (){
@@ -115,6 +121,7 @@ function correctlyAnswered (){
     clearInterval(countDown);
     correct ++;
     $('.mainContainer').html('<h2> Correct!</h2>');
+    showImage();
     if(currentlyOnQuestion ===questions.length-1){
         setTimeout(showResults, 5*1000);
     }else{
@@ -129,6 +136,7 @@ function incorrectlyAnswered (){
     incorrect ++;
     $('.mainContainer').html('<h2> Wrong!</h2>');
     $('.mainContainer').append('<h3> The Correct Answer is: '+questions[currentlyOnQuestion].correctAnswer+'</h3>')
+    showImage();
     if(currentlyOnQuestion ===questions.length-1){
         setTimeout(showResults, 5*1000);
     }else{
