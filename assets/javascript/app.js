@@ -1,5 +1,5 @@
 // alert("hello"); to make sure linked properly
-//questions
+//questions object with question, answer choices, correct answer, and image
 var questions = [{
     question: "Botany is the study of?",
     answers: ["Plants", "Rocks", "Planets", "Gorillas"],
@@ -36,7 +36,7 @@ var questions = [{
     correctAnswer: "Beta-carotene",
     Image: "assets/images/beta-carotene.jpg",
 }];
-
+//global varibles 
 var timer=30;
 var correct =0;
 var incorrect = 0;
@@ -44,8 +44,7 @@ var unanswered =0;
 var currentlyOnQuestion = 0;
 var countDown;
 
-
-//start screen
+//start screen to start the game
 $("#begin").on ('click', function(){
     $("#begin").remove();
     currentQuestion();
@@ -63,44 +62,32 @@ function startTimer  (){
 
 }
 
-//current question
+//current question & starts timer interval 
 function currentQuestion (){
     clearInterval(countDown);
      countDown = setInterval(startTimer, 1000);
     $('.mainContainer').html('<h2>'+ questions[currentlyOnQuestion].question+ '</h2>');
+    //loops through the question and adds data-name attribute which is used for determining if the answer is correct
     for (var i=0; i <questions[currentlyOnQuestion].answers.length; i++){
         $('.mainContainer').append('<button class="answer-choices" id="button-'+ i + '"data-name="'+questions[currentlyOnQuestion].answers[i]+ '">'+questions[currentlyOnQuestion].answers[i]+ '</button');
     }
 }
 
-//next question
+//next question which resets the timer and moves through the array of questions
 function nextQuestion (){
     timer =30;
-    $('#timer-here').html('<h3>"Time Left: "' + timer+ '</h3>');
+    $('#timer-here').html('<h3>Time Left: ' + timer+ '</h3>');
     currentlyOnQuestion ++;
     currentQuestion();
 
 }
 
-// timeout
-function outOfTime (){
-    clearInterval(countDown);
-    unanswered++;
-    $('.mainContainer').html('<h2> You ran out of Time!</h2>');
-    $('.mainContainer').append('<h3> The Correct Answer is: '+questions[currentlyOnQuestion].correctAnswer+'</h3>')
-    showImage();
-    if(currentlyOnQuestion ===questions.length-1){
-        setTimeout(showResults, 5*1000);
-    }else{
-        setTimeout(nextQuestion, 5*1000);
-    }
-
-}
+// click function 
 $(document).on('click', '.answer-choices', function(e){
     clickedAnswer(e);
 })
 
-// question answered
+// question answered --determines if the answer is correct and which screen to go to if correct/incorrect
 function clickedAnswer (e){
     clearInterval(countDown);
     if($(e.target).data("name")===questions[currentlyOnQuestion].correctAnswer) {
@@ -108,6 +95,25 @@ function clickedAnswer (e){
     }else {
         incorrectlyAnswered();
     }
+}
+
+//determine if last question or not
+function isLastQuestion (){
+    if(currentlyOnQuestion ===questions.length-1){
+        setTimeout(showResults, 5*1000);
+    }else{
+        setTimeout(nextQuestion, 5*1000);
+    }
+}
+
+// if you run out of time
+function outOfTime (){
+    clearInterval(countDown);
+    unanswered++;
+    $('.mainContainer').html('<h2> You ran out of Time!</h2>');
+    $('.mainContainer').append('<h3> The Correct Answer is: '+questions[currentlyOnQuestion].correctAnswer+'</h3>')
+    showImage();
+    isLastQuestion ();
 }
 //display images when question is answered
 function showImage (){
@@ -123,12 +129,7 @@ function correctlyAnswered (){
     correct ++;
     $('.mainContainer').html('<h2> Correct!</h2>');
     showImage();
-    if(currentlyOnQuestion ===questions.length-1){
-        setTimeout(showResults, 5*1000);
-    }else{
-        setTimeout(nextQuestion, 5*1000);
-    }
-
+    isLastQuestion ();
 }
 // if question is answered incorrectly
 function incorrectlyAnswered (){
@@ -138,11 +139,7 @@ function incorrectlyAnswered (){
     $('.mainContainer').html('<h2> Wrong!</h2>');
     $('.mainContainer').append('<h3> The Correct Answer is: '+questions[currentlyOnQuestion].correctAnswer+'</h3>')
     showImage();
-    if(currentlyOnQuestion ===questions.length-1){
-        setTimeout(showResults, 5*1000);
-    }else{
-        setTimeout(nextQuestion, 5*1000);
-    }
+    isLastQuestion ();
 }
 
 // result page
