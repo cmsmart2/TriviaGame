@@ -12,8 +12,8 @@ var questions = [{
     Image: "assets/images/Theophrastus.jpg",
 }, {
     question: "How many seed leaves does a dicotyledon have?",
-    answers: ["0", "1", "2", "3"],
-    correctAnswer: "2",
+    answers: ["Zero", "One", "Two", "Three"],
+    correctAnswer: "Two",
     Image: "assets/images/dicotyledon.jpg",
 }, {
     question: "What is the botanical name for the male reporoductive organ in flowering plants?",
