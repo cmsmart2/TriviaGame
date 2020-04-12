@@ -1,5 +1,7 @@
 # TriviaGame
 
+https://cmsmart2.github.io/TriviaGame/
+
 Botany Trivia Game,  created by Cera Smart
 
 Here's how the quiz works:
